@@ -5,7 +5,7 @@
 #include "LedControl.h"
 #include "MonoChromeLedCube.h"
 #define CUBE_SIZE 8
-
+extern LedControl lc;
 void initialiseCube();
 void clearDisplay(int i);
 void clearCube();
@@ -25,9 +25,6 @@ void screenFill();
 void screenTest(int t);
 void drawSquare(int x, int y, int height, int size, bool state);
 void drawHollowSquare(int x, int y, int height, int size, bool state);
-
-
-
-
-
+extern byte alphabet[27][8];
+void setRow(int addr, int row, byte b);
 #endif

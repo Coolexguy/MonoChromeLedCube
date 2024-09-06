@@ -2,22 +2,22 @@
 #include "MonoChromeLedCube.h"
 #define CUBE_SIZE 8
 // LedControl lc = LedControl(12, 11, 10, CUBE_SIZE);  //data=12,clock=13,cs=10,displays
-void setup() {
+void setup()
+{
   initialiseCube();
   pinMode(A0, INPUT);
   randomSeed(analogRead(A0));
   // Serial.begin(9600);
 }
 
-
-
 /* Important points:
   - Convert 3d boolean array to 2d byte array.
 */
 
-bool cube[8][8][8];
+// bool cube[8][8][8];
 // int t = -8;
-void loop() {
+void loop()
+{
   // for(int i = 0 ; i < 12 ; i++)
   // slantPlanes(0, 1000);
   // slantPlanes(6);
@@ -61,9 +61,6 @@ void loop() {
   //   }
   // }
 
-
-
-
   // screenFill();
   // draw_circle(3,3,3,3);
   // screenTest(0);
@@ -77,93 +74,151 @@ void loop() {
   // lc.setIntensity(i,random(0,16));
 
   // sphereFormCollapse();
-  // clearCube();
 
-// pyramid();
-
-for(int i = 0 ; i < 8 ; i++)
+  // pyramid();
+const char* text = "RATNA";
+  int* indices = stringToAlphabetIndices(text);
+  int length = strlen(text);
+  for (int j = 0; j < length; j++) {
+    for (int k = 0; k < 10; k++) {
+      for (int i = 0; i < 8; i++) {
+        clearDisplay(k - 2);
+        setRow(k, i, reverseByte(alphabet[indices[j]][7 - i]));
+      }
+      delay(100);
+    }
+  }
+}
+int* stringToAlphabetIndices(const char* str) {
+  static int indices[100];
+  int length = strlen(str);
+  
+  for (int i = 0; i < length; i++) {
+    if (str[i] >= 'A' && str[i] <= 'Z') {
+      indices[i] = str[i] - 'A' + 1; 
+    } else {
+      indices[i] = 0;
+    }
+  }
+  
+  return indices;
+}
+byte reverseByte(byte b)
 {
-  drawHollowSquare(i,i,i,8-(2*i),1);
-  drawHollowSquare(i,i,i+1,8-(2*i),1);
-  // drawSquare(i,i,i,8-(2*i),1);
-  // delay(100);
+  byte reversed = 0;
+  for (int i = 0; i < 8; i++)
+  {
+    reversed |= ((b >> i) & 0x01) << (7 - i);
+  }
+  return reversed;
 }
-// drawSquare(0,0,7,8,1);
-// drawSquare(0,0,0,8,1);
-// drawHollowSquare(0,0,0,8,1);
+void pyramid()
+{
+  for (int i = 0; i < 4; i++)
+  {
+    drawHollowSquare(i, i, 2 * i, 8 - (2 * i), 1);
+    drawHollowSquare(i, i, 2 * (i) + 1, 8 - (2 * i), 1);
+  }
 }
-void pyramid(){
 
-}
-
-
-
-
-
-
-
-void slantPlanes(int choice, int d) {
-  if (choice == 0) {
-    for (int t = -7; t <= 7; t++) {
+void slantPlanes(int choice, int d)
+{
+  if (choice == 0)
+  {
+    for (int t = -7; t <= 7; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, x == (y - t));
           }
         }
       }
     }
-  } else if (choice == 1) {
-    for (int t = -7; t < 8; t++) {
+  }
+  else if (choice == 1)
+  {
+    for (int t = -7; t < 8; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, y == (z - t));
           }
         }
       }
     }
-  } else if (choice == 2) {
-    for (int t = -7; t < 8; t++) {
+  }
+  else if (choice == 2)
+  {
+    for (int t = -7; t < 8; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, z == (x - t));
           }
         }
       }
     }
-  } else if (choice == 3) {
-    for (int t = -7; t < 8; t++) {
+  }
+  else if (choice == 3)
+  {
+    for (int t = -7; t < 8; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, y == (x - t));
           }
         }
       }
     }
-  } else if (choice == 4) {
-    for (int t = -7; t < 8; t++) {
+  }
+  else if (choice == 4)
+  {
+    for (int t = -7; t < 8; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, z == (y - t));
           }
         }
       }
     }
-  } else if (choice == 5) {
-    for (int t = -7; t < 8; t++) {
+  }
+  else if (choice == 5)
+  {
+    for (int t = -7; t < 8; t++)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, x == (z - t));
           }
         }
@@ -171,74 +226,102 @@ void slantPlanes(int choice, int d) {
     }
   }
 
-
-
-
-
-
-
-
-  else if (choice == 6) {
-    for (int t = 7; t > -8; t--) {
+  else if (choice == 6)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
-            set1(x, y, z, x == (y - t));  //
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
+            set1(x, y, z, x == (y - t)); //
           }
         }
       }
     }
-  } else if (choice == 7) {
-    for (int t = 7; t > -8; t--) {
+  }
+  else if (choice == 7)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, y == (z + t));
           }
         }
       }
     }
-  } else if (choice == 8) {
-    for (int t = 7; t > -8; t--) {
+  }
+  else if (choice == 8)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, z == (x + t));
           }
         }
       }
     }
-  } else if (choice == 9) {
-    for (int t = 7; t > -8; t--) {
+  }
+  else if (choice == 9)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, y == (x + t));
           }
         }
       }
     }
-  } else if (choice == 10) {
-    for (int t = 7; t > -8; t--) {
+  }
+  else if (choice == 10)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, z == (y + t));
           }
         }
       }
     }
-  } else if (choice == 11) {
-    for (int t = 7; t > -8; t--) {
+  }
+  else if (choice == 11)
+  {
+    for (int t = 7; t > -8; t--)
+    {
       delay(d);
-      for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-          for (int z = 0; z < 8; z++) {
+      for (int x = 0; x < 8; x++)
+      {
+        for (int y = 0; y < 8; y++)
+        {
+          for (int z = 0; z < 8; z++)
+          {
             set1(x, y, z, x == (z + t));
           }
         }
