@@ -27,4 +27,7 @@ void drawSquare(int x, int y, int height, int size, bool state);
 void drawHollowSquare(int x, int y, int height, int size, bool state);
 extern byte alphabet[27][8];
 void setRow(int addr, int row, byte b);
+void showText(const char* t,int d);
+int* stringToAlphabetIndices(const char* str);
+byte reverseByte(byte b);
 #endif

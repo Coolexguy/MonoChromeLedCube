@@ -299,3 +299,40 @@ void drawHollowSquare(int x, int y, int height, int size, bool state)
     set1(x + size - 1, y + j, height, state);
   }
 }
+void showText(const char* t, int d){
+const char* text = t;
+  int* indices = stringToAlphabetIndices(text);
+  int length = strlen(text);
+  for (int j = 0; j < length; j++) {
+    for (int k = 0; k < 10; k++) {
+      for (int i = 0; i < 8; i++) {
+        clearDisplay(k - 2);
+        setRow(k, i, reverseByte(alphabet[indices[j]][7 - i]));
+      }
+      delay(d);
+    }
+  }
+}
+int* stringToAlphabetIndices(const char* str) {
+  static int indices[100];
+  int length = strlen(str);
+  
+  for (int i = 0; i < length; i++) {
+    if (str[i] >= 'A' && str[i] <= 'Z') {
+      indices[i] = str[i] - 'A' + 1; 
+    } else {
+      indices[i] = 0;
+    }
+  }
+  
+  return indices;
+}
+byte reverseByte(byte b)
+{
+  byte reversed = 0;
+  for (int i = 0; i < 8; i++)
+  {
+    reversed |= ((b >> i) & 0x01) << (7 - i);
+  }
+  return reversed;
+}

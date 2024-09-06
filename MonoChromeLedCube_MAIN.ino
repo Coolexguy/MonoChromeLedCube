@@ -76,48 +76,32 @@ void loop()
   // sphereFormCollapse();
 
   // pyramid();
-const char* text = "RATNA";
-  int* indices = stringToAlphabetIndices(text);
-  int length = strlen(text);
-  for (int j = 0; j < length; j++) {
-    for (int k = 0; k < 10; k++) {
-      for (int i = 0; i < 8; i++) {
-        clearDisplay(k - 2);
-        setRow(k, i, reverseByte(alphabet[indices[j]][7 - i]));
-      }
-      delay(100);
-    }
-  }
+
+  //SEQUENCE
+  // showText("RISC",50);
+  // for(int i = 0 ; i < 2000 ; i++)
+  randomOne();
+//   clearCube();
+//   for(int i = 0 ; i < 8 ; i++){
+//     lc.setIntensity(i,15);
+//   }
+//   for(int i = 0 ; i < 50; i++){
+//   sin();
+// delay(50);
+//   }
+//   clearCube();
+//   pyramid(75);
+
 }
-int* stringToAlphabetIndices(const char* str) {
-  static int indices[100];
-  int length = strlen(str);
-  
-  for (int i = 0; i < length; i++) {
-    if (str[i] >= 'A' && str[i] <= 'Z') {
-      indices[i] = str[i] - 'A' + 1; 
-    } else {
-      indices[i] = 0;
-    }
-  }
-  
-  return indices;
-}
-byte reverseByte(byte b)
-{
-  byte reversed = 0;
-  for (int i = 0; i < 8; i++)
-  {
-    reversed |= ((b >> i) & 0x01) << (7 - i);
-  }
-  return reversed;
-}
-void pyramid()
+
+void pyramid(int t)
 {
   for (int i = 0; i < 4; i++)
   {
     drawHollowSquare(i, i, 2 * i, 8 - (2 * i), 1);
+    delay(t);
     drawHollowSquare(i, i, 2 * (i) + 1, 8 - (2 * i), 1);
+    delay(t);
   }
 }
 
